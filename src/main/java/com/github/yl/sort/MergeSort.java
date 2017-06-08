@@ -2,6 +2,7 @@ package com.github.yl.sort;
 
 /**
  * Created by yanglei on 2017/4/23.
+ * 归并排序
  */
 public class MergeSort {
 
