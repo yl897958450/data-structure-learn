@@ -7,7 +7,7 @@ public class BinaryTree {
     private static TreeNode root;
 
     /**
-     * 插入数据到二叉树
+     * 插入数据到二叉树（构造二叉查找树）
      * @param currentNode
      * @param newNode
      */
