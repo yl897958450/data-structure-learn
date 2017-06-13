@@ -85,8 +85,20 @@ public class BinaryTree {
             }else{
                 parent.setRightChild(current.getLeftChild());
             }
-        //要删除节点左、右孩子都存在
         }else{
+            /**
+             *要删除的节点左、右孩子节点都存在，则需要寻找删除节点的后继节点
+             * 两种情况进行删除
+             *（一）后继节点是要删除节点的右子节点
+             *     1、把current从它父节点的对应子节点中删掉，重置为后继节点
+             *     2、把current节点的左节点移出来，置为后继节点的左节点
+             *（二）后继节点是要删除节点的右子节点的左后代
+             *     1、把后继节点父亲节点的左节点置为后继节点的右节点
+             *     2、把后继节点的右节点设置为要删除节点的右节点
+             *     上面两部在寻找后继节点方法中完成
+             *     3、把current从它父节点的对应子节点中删掉，重置为后继节点
+             *     4、把current节点的左节点移出来，置为后继节点的左节点
+             */
             TreeNode successor = getSuccessor(current);
             if(current == root){
                 root = successor;
@@ -113,7 +125,9 @@ public class BinaryTree {
         System.out.print("后继节点：");
         successor.display();
         if(successor != delNode.getRightChild()){
+            //把后继节点父亲节点的左节点置为后继节点的右节点
             successorParent.setLeftChild(successor.getRightChild());
+            //把后继节点的右节点设置为要删除节点的右节点
             successor.setRightChild(delNode.getRightChild());
         }
 
