@@ -87,10 +87,37 @@ public class BinaryTree {
             }
         //要删除节点左、右孩子都存在
         }else{
-
+            TreeNode successor = getSuccessor(current);
+            if(current == root){
+                root = successor;
+            }else if(isLeftChild){
+                parent.setLeftChild(successor);
+            }else{
+                parent.setRightChild(successor);
+            }
+            successor.setLeftChild(current.getLeftChild());
         }
 
-        return false;
+        return true;
+    }
+
+    public TreeNode getSuccessor(TreeNode delNode){
+        TreeNode successorParent = delNode;
+        TreeNode successor = delNode;
+        TreeNode current = delNode.getRightChild();
+        while(current != null){
+            successorParent = successor;
+            successor = current;
+            current = current.getLeftChild();
+        }
+        System.out.print("后继节点：");
+        successor.display();
+        if(successor != delNode.getRightChild()){
+            successorParent.setLeftChild(successor.getRightChild());
+            successor.setRightChild(delNode.getRightChild());
+        }
+
+        return successor;
     }
 
     public TreeNode findNode(TreeNode node){
@@ -163,6 +190,8 @@ public class BinaryTree {
 
 
 
+
+
     public static void main(String[] args) {
         int[] arr = { 6,1,5, 3, 9, 7, 0, 4,13 };
         BinaryTree binaryTree = new BinaryTree();
@@ -172,19 +201,29 @@ public class BinaryTree {
         }
         binaryTree.findMinNode().display();
         binaryTree.findMaxNode().display();
-        TreeNode<Integer> findNode = new TreeNode(9);
+        TreeNode<Integer> findNode = new TreeNode(6);
         TreeNode<Integer> resultNode = binaryTree.findNode(findNode);
         resultNode.display();
         resultNode.getLeftChild().display();
+
+        System.out.println("");
+        System.out.println("后继节点");
+        binaryTree.getSuccessor(resultNode);
 
         System.out.println("先序遍历");
         binaryTree.preOrder(root);
         System.out.println("");
         System.out.println("中序遍历");
         binaryTree.inOrder(root);
+
         System.out.println("");
         System.out.println("后序遍历");
         binaryTree.postOrder(root);
+        binaryTree.deleteNode(findNode);
+
+        System.out.println("");
+        System.out.println("中序遍历");
+        binaryTree.inOrder(root);
     }
 
 }
