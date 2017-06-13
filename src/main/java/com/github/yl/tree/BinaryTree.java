@@ -2,6 +2,7 @@ package com.github.yl.tree;
 
 /**
  * Created by lei.yang on 17/4/17.
+ * 二叉查找树
  */
 public class BinaryTree {
     private static TreeNode root;
@@ -32,6 +33,64 @@ public class BinaryTree {
                 }
             }
         }
+    }
+
+    /**
+     * 删除二叉搜索树节点
+     * @param node 要删除的节点
+     */
+    public boolean deleteNode(TreeNode node){
+        if(node == null && root == null){
+            return false;
+        }
+        TreeNode current = root;
+        TreeNode parent = root;
+        boolean isLeftChild = true;
+        //寻找该节点
+        while(current.getT().compareTo(node.getT()) != 0){
+            parent = current;
+            if(current.getT().compareTo(node.getT()) < 0){
+                current = current.getRightChild();
+                isLeftChild = false;
+            }else{
+                current = current.getLeftChild();
+                isLeftChild = true;
+            }
+            if(current == null)
+                return false;
+        }
+        //要删除节点是叶子节点
+        if(current.getLeftChild() == null && current.getRightChild() == null){
+            if(current == root)
+                root = null;
+            else if(isLeftChild)
+                parent.setLeftChild(null);
+            else
+                parent.setRightChild(null);
+        //要删除的节点只有右孩子节点
+        }else if(current.getLeftChild() == null){
+            if(current == root) {
+                root = current.getRightChild();
+            } else if(isLeftChild){
+                parent.setLeftChild(current.getRightChild());
+            }else{
+                parent.setRightChild(current.getRightChild());
+            }
+        //被删除的节点只有左孩子节点
+        }else if(current.getRightChild() == null){
+            if(current == root){
+                root = null;
+            }else if(isLeftChild){
+                parent.setLeftChild(current.getLeftChild());
+            }else{
+                parent.setRightChild(current.getLeftChild());
+            }
+        //要删除节点左、右孩子都存在
+        }else{
+
+        }
+
+        return false;
     }
 
     public TreeNode findNode(TreeNode node){
@@ -105,7 +164,7 @@ public class BinaryTree {
 
 
     public static void main(String[] args) {
-        int[] arr = { 6,1, 3, 9, 7, 0, 4 };
+        int[] arr = { 6,1,5, 3, 9, 7, 0, 4,13 };
         BinaryTree binaryTree = new BinaryTree();
         for (int i = 0; i < arr.length; i++) {
             TreeNode<Integer> node = new TreeNode<Integer>(arr[i]);
@@ -113,8 +172,10 @@ public class BinaryTree {
         }
         binaryTree.findMinNode().display();
         binaryTree.findMaxNode().display();
-        TreeNode<Integer> findNode = new TreeNode(4);
-        binaryTree.findNode(findNode).display();
+        TreeNode<Integer> findNode = new TreeNode(9);
+        TreeNode<Integer> resultNode = binaryTree.findNode(findNode);
+        resultNode.display();
+        resultNode.getLeftChild().display();
 
         System.out.println("先序遍历");
         binaryTree.preOrder(root);
