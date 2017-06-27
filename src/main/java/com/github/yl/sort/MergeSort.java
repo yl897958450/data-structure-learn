@@ -28,8 +28,10 @@ public class MergeSort {
             int seperate = (start + end )/2;
             //左侧排序
             recMergeSort(array,tmpArray,start,seperate);
+            System.out.println("start: "+start+" seperate: "+seperate);
             //右侧排序
             recMergeSort(array,tmpArray,seperate+1,end);
+            System.out.println("seperate: "+seperate + " end: "+end);
             //合并
             merge(array,tmpArray,start,seperate+1,end);
         }
@@ -46,20 +48,21 @@ public class MergeSort {
                 tmpArray[tmpPos++]=array[leftPos++];
             else
                 tmpArray[tmpPos++]=array[rightPos++];
-        //右侧数组已无数据，将左侧数组剩余数据copy到临时数据
+        //右侧数组已无数据，将左侧数组剩余数据copy到临时数组
         while (leftPos <= leftEnd)
             tmpArray[tmpPos++] = array[leftPos++];
-        //左侧数组已无数据，将右侧数组剩余数据copy到临时数据
+        //左侧数组已无数据，将右侧数组剩余数据copy到临时数组
         while (rightPos <= rightEnd)
             tmpArray[tmpPos++] = array[rightPos++];
         //copy tmpArray back
         for(int j=0;j< numElements;j++,rightEnd--){
             array[rightEnd] = tmpArray[rightEnd];
         }
+        display(array);
     }
 
     public static void main(String[] args) {
-        int[] a = {1, 89, 38,23, 99, 3, 4, 10, 9, 53,3};
+        int[] a = {1, 89, 38,23, 99, 4, 2, 3, 9, 53};
         MergeSort.mergeSort(a);
         MergeSort.display(a);
 
